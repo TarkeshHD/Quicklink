@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage ("Code") {
+            steps {
+                echo " Cloning the Code"
+                git url:"https://github.com/TarkeshHD/Quicklink.git" , branch: "main"
+            }
+        }
+        stage ("Build"){
+            steps {
+                echo "Build the image"
+                sh "docker build -t quicklink-ui ."
+            }
+        }
+        stage ("Pushing the image to Dockerhub"){
+            steps {
+                echo "pushing image to docker hub"
+                withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]) {
+                sh "docker tag quicklink-ui ${env.dockerHubUser}/quicklink-ui:latest"
+                sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                sh "docker push ${env.dockerHubUser}/quicklink-ui:latest"
+                }
+            }
+        }
+        stage('Deploy to Kubernets'){
+             steps{
+                 script{
+                     dir('.'){
+                         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'kubernetes', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                         sh 'kubectl apply -f quicklink-ui.yaml'
+                         }
+                     }
+                 }
+             }
+        }
+    }
+}
