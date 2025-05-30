@@ -8,6 +8,7 @@ export default function Home() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        consoole.log("uri changed");
         try {
             const response = await axios.post("http://3.135.176.30:8080/api/url/shorten", {
                 originalUrl: url,
