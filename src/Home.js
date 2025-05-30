@@ -9,7 +9,7 @@ export default function Home() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/api/url/shorten", {
+            const response = await axios.post("http://3.135.176.30:8080/api/url/shorten", {
                 originalUrl: url,
             });
             setShortUrl(response.data.shortUrl);
