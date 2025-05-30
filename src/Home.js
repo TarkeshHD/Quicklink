@@ -10,7 +10,7 @@ export default function Home() {
         e.preventDefault();
         console.log("uri changed");
         try {
-            const response = await axios.post("http://3.135.176.30:8080/api/url/shorten", {
+            const response = await axios.post("http://3.135.176.30:30080/api/url/shorten", {
                 originalUrl: url,
             });
             setShortUrl(response.data.shortUrl);
