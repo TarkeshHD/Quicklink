@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: quicklink-ui
+spec:
+  type: NodePort
+  selector:
+    app: quicklink-ui
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quicklink-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: quicklink-ui
+  template:
+    metadata:
+      labels:
+        app: quicklink-ui
+    spec:
+      containers:
+        - name: quicklink-ui
+          image: prabhudev14/quicklink-ui:1.6
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+
