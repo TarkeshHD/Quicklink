@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: quicklink-ui
-          image: prabhudev14/quicklink-ui
+          image: tarkesh852/quicklink-ui
           resources:
             requests:
               memory: "256Mi"
