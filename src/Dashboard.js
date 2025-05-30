@@ -10,7 +10,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchUrls = async () => {
             try {
-                const response = await axios.get("http://3.135.176.30:8080/api/url/info/all");
+                const response = await axios.get("http://3.135.176.30:30080/api/url/info/all");
                 setUrls(response.data);
             } catch (err) {
                 console.error("Failed to fetch URLs:", err);
